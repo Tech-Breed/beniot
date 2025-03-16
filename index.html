@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Entry Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="nav.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="dashboard">
+        <!-- 📌 Hamburger Menu (Visible on Mobile) -->
+        <button class="hamburger-menu" id="hamburger">☰</button>
+
+        <!-- 📌 Sidebar Navigation -->
+        <aside class="sidebar" id="sidebar">
+            <h2>Dashboard</h2>
+            <nav>
+                <ul>
+                    <li class="active" data-section="equipment">Equipment Maintenance</li>
+                    <li data-section="usage">Equipment Data & Usage</li>
+                    <li data-section="operations">Operations Data</li>
+                    <li data-section="inventory">Supply Chain Inventory</li>
+                    <li data-section="expenses">Expense Tracking</li>
+                    <li data-section="schedule">Maintenance Schedule</li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- 📌 Main Content -->
+        <main class="content">
+            <header>
+                <h1 id="section-title">Equipment Maintenance</h1>
+            </header>
+
+            <!-- 📌 Equipment Maintenance Section -->
+            <section id="equipment" class="content-section">
+                <section class="status-tracking">
+                    <div class="status-tab active" data-status="draft">
+                        Draft <span class="count" id="draft-count">0</span>
+                    </div>
+                    <div class="status-tab" data-status="in-progress">
+                        In Progress <span class="count" id="in-progress-count">0</span>
+                    </div>
+                    <div class="status-tab" data-status="in-review">
+                        In Review <span class="count" id="in-review-count">0</span>
+                    </div>
+                    <div class="status-tab" data-status="approved">
+                        Approved <span class="count" id="approved-count">0</span>
+                    </div>
+                    <div class="status-tab" data-status="archived">
+                        Archived <span class="count" id="archived-count">0</span>
+                    </div>
+                    <div class="status-tab" data-status="deleted">
+                        Deleted <span class="count" id="deleted-count">0</span>
+                    </div>
+                    <div class="status-tab create-new"><a href="form.html">Create New</a></div> 
+                </section>
+
+                <section class="data-list">
+                    <div class="data-item">
+                        <span class="data-name">Equipment Report 001</span>
+                        <div class="data-actions">
+                            <button class="export-btn">Export</button>
+                            <div class="dropdown">
+                                <button class="three-dots">⋮</button>
+                                <div class="dropdown-menu">
+                                    <button>Rename</button>
+                                    <button>Move to Trash</button>
+                                    <button>Copy Link</button>
+                                    <button>Edit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </section>
+
+            <!-- 📌 Equipment Data & Usage Section -->
+            <section id="usage" class="content-section">
+                <header>
+                    <button><a href="equipment-form.html">Add Data</a></button>
+                </header>
+
+                <section class="usage-data-list">
+                    <p>No data available. Click "Add Data" to input equipment usage details.</p>
+                </section>
+
+                <section class="usage-analytics">
+                    <h3>Equipment Usage Statistics</h3>
+                </section>
+
+                <!-- 📌 Charts Section -->
+                <section class="charts-container">
+                    <div class="chart-box">
+                        <h3>Usage Hours</h3>
+                        <canvas id="usageChart"></canvas>
+                    </div>
+                    <div class="chart-box">
+                        <h3>Equipment Condition</h3>
+                        <canvas id="conditionChart"></canvas>
+                    </div>
+                    <div class="chart-box">
+                        <h3>Equipment Status</h3>
+                        <canvas id="statusChart"></canvas>
+                    </div>
+                    <div class="chart-box">
+                        <h3>Operator Performance</h3>
+                        <canvas id="operatorChart"></canvas>
+                    </div>
+                    <div class="chart-box">
+                        <h3>Equipment Categories</h3>
+                        <canvas id="categoryChart"></canvas>
+                    </div>
+                    <div class="chart-box">
+                        <h3>Next Maintenance</h3>
+                        <canvas id="nextMaintenanceChart"></canvas>
+                    </div>
+                </section>
+            </section>
+        </main>
+    </div>
+
+    <!-- 📌 Sidebar Toggle Script (For Mobile) -->
+    <script>
+        document.getElementById("hamburger").addEventListener("click", function () {
+            document.getElementById("sidebar").classList.toggle("show-sidebar");
+        });
+    </script>
+
+    
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll(".edit-report").forEach(button => {
+            button.addEventListener("click", function () {
+                let reportId = this.getAttribute("data-id");
+                window.location.href = `form.html?id=${reportId}`;
+            });
+        });
+
+        document.querySelectorAll(".delete-report").forEach(button => {
+            button.addEventListener("click", function () {
+                let reportId = parseInt(this.getAttribute("data-id"));
+                let reports = JSON.parse(localStorage.getItem("maintenanceRecords")) || [];
+                reports = reports.filter(r => r.id !== reportId);
+                localStorage.setItem("maintenanceRecords", JSON.stringify(reports));
+                window.location.reload();
+            });
+        });
+    });
+</script>
+
+    <!-- 📌 External Scripts -->
+    <script src="script.js"></script>
+    <script src="status.js"></script>
+    <script src="step-form.js"></script>
+    <script src="usage.js"></script>
+    <script src="chart.js"></script>
+</body>
+</html>

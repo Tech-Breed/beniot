@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Equipment Usage Form</title>
+    <link rel="stylesheet" href="equipment.css">
+</head>
+<body>
+    <div class="form-container">
+        <div class="form-box">
+            <h2>Equipment Usage Form</h2>
+            <form id="usage-form">
+                <!-- Step 1: Equipment Details -->
+                <div class="form-step active">
+                    <h3>Equipment Details</h3>
+                    <label for="equipment-name">Equipment Name</label>
+                    <input type="text" id="equipment-name" required>
+
+                    <label for="equipment-number">Equipment Number</label>
+                    <input type="text" id="equipment-number" required>
+
+                    <label for="category">Category</label>
+                    <select id="category">
+                        <option value="centrifugal-pump">Centrifugal Pump</option>
+                        <option value="multi-stage-pump">Multi-Stage Pump</option>
+                        <option value="blender-dual-pod">Blender Dual Pod</option>
+                        <option value="excavator">Excavator</option>
+                    </select>
+
+                    <button type="button" class="next-step">Next</button>
+                </div>
+
+                <!-- Step 2: Usage Logs -->
+                <div class="form-step">
+                    <h3>Usage Logs</h3>
+                    <label for="start-time">Start Time</label>
+                    <input type="datetime-local" id="start-time" required>
+
+                    <label for="end-time">End Time</label>
+                    <input type="datetime-local" id="end-time" required>
+
+                    <label for="operator-name">Operator Name</label>
+                    <input type="text" id="operator-name" required>
+
+                    <label for="usage-purpose">Usage Purpose</label>
+                    <input type="text" id="usage-purpose" required>
+
+                    <button type="button" class="prev-step">Back</button>
+                    <button type="button" class="next-step">Next</button>
+                </div>
+
+                <!-- Step 3: Equipment Condition -->
+                <div class="form-step">
+                    <h3>Equipment Condition</h3>
+                    <label for="condition">Condition After Use</label>
+                    <select id="condition">
+                        <option value="good">Good</option>
+                        <option value="needs-checkup">Needs Checkup</option>
+                        <option value="damaged">Damaged</option>
+                    </select>
+
+                    <label for="issues-detected">Issues Detected (if any)</label>
+                    <input type="text" id="issues-detected">
+
+                    <label for="last-maintenance">Last Maintenance Date</label>
+                    <input type="date" id="last-maintenance">
+
+                    <label for="next-maintenance">Next Maintenance Due</label>
+                    <input type="date" id="next-maintenance">
+
+                    <button type="button" class="prev-step">Back</button>
+                    <button type="button" class="next-step">Next</button>
+                </div>
+
+                <!-- Step 4: Image Upload & Submit -->
+                <div class="form-step">
+                    <h3>Upload Report Image</h3>
+                    <label for="upload-image">Upload Image</label>
+                    <input type="file" id="upload-image">
+
+                    <button type="button" class="prev-step">Back</button>
+                    <button type="submit">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="usage-form.js"></script>
+</body>
+</html>

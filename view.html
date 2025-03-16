@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Report</title>
+    <link rel="stylesheet" href="view.css">
+</head>
+<body>
+
+    <div class="report-container">
+        <h1>Maintenance Report</h1>
+
+        <section>
+            <h2>📞 Phone Verification</h2>
+            <p><span>Phone:</span> <span id="view-phone"></span></p>
+        </section>
+
+        <section>
+            <h2>📂 Uploaded Documents</h2>
+            <p><span>Uploaded File:</span> <span id="view-uploaded-file"></span></p>
+            <img id="view-upload-img" src="" alt="Uploaded Image">
+        </section>
+
+        <section>
+            <h2>🔐 Security Question</h2>
+            <p><span>Answer:</span> <span id="view-security-question"></span></p>
+        </section>
+
+        <section>
+            <h2>⚙️ Equipment Details</h2>
+            <p><span>Name:</span> <span id="view-equipment-name"></span></p>
+            <p><span>Model:</span> <span id="view-equipment-model"></span></p>
+            <p><span>Issue:</span> <span id="view-equipment-issue"></span></p>
+        </section>
+
+        <section>
+            <h2>🛠️ Maintenance Records</h2>
+            <p><span>Date:</span> <span id="view-maintenance-date"></span></p>
+            <p><span>Technician:</span> <span id="view-technician-name"></span></p>
+            <p><span>Actions Taken:</span> <span id="view-actions-taken"></span></p>
+            <p><span>Status:</span> <span id="view-maintenance-status"></span></p>
+        </section>
+
+        <button id="export-doc">Export as DOCX</button>
+        <button id="export-excel">Export as Excel</button>
+        <button id="index.html"><a href="index.html">Home</a></button>
+    </div>
+
+    <script src="view.js"></script>
+</body>
+</html>

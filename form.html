@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="form.css">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+    
+
+    <div class="container">
+        <!-- Progress Bar -->
+        <div class="progress-bar">
+            <div class="step active"><span class="material-icons">smartphone</span><p>Verify Phone</p></div>
+            <div class="step"><span class="material-icons">upload_file</span><p>Upload Documents</p></div>
+            <div class="step"><span class="material-icons">security</span><p>Security Questions</p></div>
+            <div class="step"><span class="material-icons">engineering</span><p>Equipment Details</p></div>
+            <div class="step"><span class="material-icons">checklist</span><p>Maintenance Records</p></div>
+        </div>
+    
+        <!-- Multi-Step Form -->
+        <form id="step-form" autocomplete="off">
+            <!-- Step 1: Phone Verification -->
+            <div class="form-step active">
+                <h2>Setup your phone</h2>
+                <label for="phone">Phone Number:</label>
+                <input type="text" id="phone" name="phone" placeholder="123456789" required>
+                <button type="button" class="next-step">Next</button>
+            </div>
+    
+            <!-- Step 2: Upload Documents -->
+            <div class="form-step">
+                <h2>Upload Documents</h2>
+                <label for="upload-docs">Select file:</label>
+                <input type="file" id="upload-docs" name="upload-docs" required>
+                <button type="button" class="prev-step">Back</button>
+                <button type="button" class="next-step">Next</button>
+            </div>
+    
+            <!-- Step 3: Security Questions -->
+            <div class="form-step">
+                <h2>Security Questions</h2>
+                <label for="security-question">Your first pet's name?</label>
+                <input type="text" id="security-question" name="security-question" required>
+                <button type="button" class="prev-step">Back</button>
+                <button type="button" class="next-step">Next</button>
+            </div>
+    
+            <!-- Step 4: Equipment Details -->
+            <div class="form-step">
+                <h2>Equipment Details</h2>
+                <label for="equipment-name">Equipment Name:</label>
+                <input type="text" id="equipment-name" name="equipment-name" required>
+    
+                <label for="equipment-model">Model:</label>
+                <input type="text" id="equipment-model" name="equipment-model" required>
+    
+                <label for="equipment-issue">Issue:</label>
+                <textarea id="equipment-issue" name="equipment-issue" required></textarea>
+    
+                <button type="button" class="prev-step">Back</button>
+                <button type="button" class="next-step">Next</button>
+            </div>
+    
+            <!-- Step 5: Maintenance Records -->
+            <div class="form-step">
+                <h2>Maintenance Records</h2>
+                <label for="maintenance-date">Date of Maintenance:</label>
+                <input type="date" id="maintenance-date" name="maintenance-date" required>
+    
+                <label for="technician-name">Technician Name:</label>
+                <input type="text" id="technician-name" name="technician-name" required>
+    
+                <label for="actions-taken">Actions Taken:</label>
+                <textarea id="actions-taken" name="actions-taken" required></textarea>
+    
+                <label for="maintenance-status">Status:</label>
+                <select id="maintenance-status" name="maintenance-status" required>
+                    <option value="draft">Draft</option>
+                    <option value="in-progress">In Progress</option>
+                    <option value="in-review">In Review</option>
+                    <option value="approved">Approved</option>
+                    <option value="Archived">Archived</option>
+                </select>
+    
+                <button type="button" class="prev-step">Back</button>
+                <button type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+    
+
+   
+    <script>
+     document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("step-form");
+    if (!form) {
+        console.error("❌ Maintenance form not found in DOM. Ensure the ID is correct.");
+        return;
+    }
+
+    const params = new URLSearchParams(window.location.search);
+    const reportId = params.get("id");
+    
+    let records = JSON.parse(localStorage.getItem("maintenanceRecords")) || [];
+    let existingReport = records.find(report => report.id == reportId);
+
+    // ✅ Prefill Form for Editing
+    if (existingReport) {
+        document.getElementById("equipment-name").value = existingReport.name || "";
+        document.getElementById("equipment-model").value = existingReport.model || "";
+        document.getElementById("equipment-issue").value = existingReport.issue || "";
+        document.getElementById("maintenance-date").value = existingReport.date || "";
+        document.getElementById("technician-name").value = existingReport.technician || "";
+        document.getElementById("actions-taken").value = existingReport.actions || "";
+        document.getElementById("maintenance-status").value = existingReport.status || "";
+
+        // ✅ Ensure Record ID is Stored
+        let hiddenInput = document.createElement("input");
+        hiddenInput.type = "hidden";
+        hiddenInput.id = "record-id";
+        hiddenInput.value = reportId;
+        form.appendChild(hiddenInput);
+    }
+
+    // ✅ Save Data on Submit
+    form.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        let newReport = {
+            id: reportId ? parseInt(reportId) : Date.now(),
+            name: document.getElementById("equipment-name").value,
+            model: document.getElementById("equipment-model").value,
+            issue: document.getElementById("equipment-issue").value,
+            date: document.getElementById("maintenance-date").value,
+            technician: document.getElementById("technician-name").value,
+            actions: document.getElementById("actions-taken").value,
+            status: document.getElementById("maintenance-status").value
+        };
+
+        if (reportId) {
+            // ✅ Update Existing Record
+            let index = records.findIndex(report => report.id == reportId);
+            if (index !== -1) {
+                records[index] = newReport;
+            }
+        } else {
+            // ✅ Create a New Report
+            records.push(newReport);
+        }
+
+        // ✅ Store in Local Storage
+        localStorage.setItem("maintenanceRecords", JSON.stringify(records));
+
+        // ✅ Redirect to Homepage
+        window.location.href = "index.html";
+    });
+});
+
+
+    </script>
+    
+    
+    
+    
+
+<script src="status.js"></script>
+<script src="step-form.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
+
+
